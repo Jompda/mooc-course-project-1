@@ -26,6 +26,3 @@
   - "Cross-Site Request Forgery (CSRF) is an attack that forces an end user to execute unwanted actions on a web application in which they’re currently authenticated" https://owasp.org/www-community/attacks/csrf
     - Jätä CSRF token pois jostain formista.
 
-
-References:
-[1]
