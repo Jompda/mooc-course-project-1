@@ -1,6 +1,13 @@
 # Project 1
 Based on mooc csrf task.
 
+## Accounts:
+```
+bob:squarepants
+alice:redqueen
+patrick:asteroid
+```
+
 - https://owasp.org/Top10/
 - https://owasp.org/www-project-top-ten/2017/
 
