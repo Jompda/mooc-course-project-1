@@ -8,40 +8,35 @@ from .models import Account
 # old transfer function vulnerable to injection
 @transaction.atomic
 def transfer(sender, receiver, amount):
-	# TODO: make these use raw sql also?
 	# TODO: an example query that exploits this
-	acc1 = Account.objects.get(user=sender)
-	acc2 = Account.objects.get(user=receiver)
-
 	if sender == receiver:
 		return
+	
+	cursor = connection.cursor()
+
+	cursor.execute("SELECT balance FROM pages_account WHERE id = %s" % sender)
+	acc1_balance = cursor.fetchone()[0]
+	cursor.execute("SELECT balance FROM pages_account WHERE id = %s" % receiver)
+	acc2_balance = cursor.fetchone()[0]
 
 	if amount <= 0:
 		return
 	
-	if acc1.balance < amount:
+	if acc1_balance < amount:
 		return
 	
-	cursor = connection.cursor()
-	cursor.execute("UPDATE pages_account SET balance = '%s' WHERE id = %s" % (acc1.balance - amount, acc1.id))
-	cursor.execute("UPDATE pages_account SET balance = '%s' WHERE id = %s" % (acc2.balance + amount, acc2.id))
-
-	acc1.refresh_from_db()
-	acc2.refresh_from_db()
+	cursor.execute("UPDATE pages_account SET balance = '%s' WHERE id = %s" % (acc1_balance - amount, sender))
+	cursor.execute("UPDATE pages_account SET balance = '%s' WHERE id = %s" % (acc2_balance + amount, receiver))
 
 
 @login_required
 def confirmView(request):
 	amount = request.session['amount'] # NOTE: Might not be parseable
-	to = User.objects.get(username=request.session['to'])
+	receiver = User.objects.get(username=request.session['to'])
 
-	transfer(request.user, to, int(amount))
-
-	#request.user.account.balance -= amount
-	#to.account.balance += amount
-
-	#request.user.account.save()
-	#to.account.save()
+	transfer(request.user.account.id, receiver.account.id, int(amount))
+	request.user.account.refresh_from_db()
+	receiver.account.refresh_from_db()
 	
 	return redirect('/')
 
