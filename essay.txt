@@ -6,6 +6,13 @@ https://github.com/Jompda/mooc-course-project-1/blob/2f87e518dccbf159695c9bd80be
 Flaw is CSRF.
 To fix uncomment thingies.
 
+FLAW 1:
+LINK to file views function transfer
+Flaw is SQL injection.
+To fix uncomment thingies.
+
+injection https://docs.djangoproject.com/en/5.1/topics/db/sql/#performing-raw-sql-queries
+
 FLAW n:
 exact source link pinpointing flaw 1...
 description of flaw 1...
@@ -14,4 +21,4 @@ how to fix it...
 
 
 References:
-[1] 
+[] 
