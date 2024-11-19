@@ -1,17 +1,25 @@
+// TODO: Update links
+
 LINK: https://github.com/Jompda/mooc-course-project-1
-installation instructions if needed
+// TODO: installation instructions if needed
+
 
 FLAW 1:
-https://github.com/Jompda/mooc-course-project-1/blob/2f87e518dccbf159695c9bd80be04582e362c369/server/pages/templates/pages/index.html#L27
-Flaw is CSRF.
-To fix uncomment thingies.
+https://github.com/Jompda/mooc-course-project-1/blob/f5d629570876d9004e9693fece4c749c7cf73703/server/pages/templates/pages/confirm.html#L23
 
-FLAW 1:
-LINK to file views function transfer
+Cross Site Request Forgery (CSRF) is a type of attack leveraging browser authentication. The idea is that if a browser holds authentication information to a service, like a cookie or HTTP login information, a malicious actor can then send requests to said service which the browser then automatically authenticates. [1]
+
+To filter out such requests, frameworks have begun providing single use tokens for the client. Should a request not have the correct token it should be deemed malicious. [2]
+
+
+FLAW 2:
+https://github.com/Jompda/mooc-course-project-1/blob/f5d629570876d9004e9693fece4c749c7cf73703/server/pages/views.py#L8
+
 Flaw is SQL injection.
+
 To fix uncomment thingies.
 
-injection https://docs.djangoproject.com/en/5.1/topics/db/sql/#performing-raw-sql-queries
+
 
 FLAW n:
 exact source link pinpointing flaw 1...
@@ -19,6 +27,8 @@ description of flaw 1...
 how to fix it...
 
 
-
 References:
-[] 
+[1] https://owasp.org/www-community/attacks/csrf
+[2] https://cybersecuritybase.mooc.fi/module-2.3/1-security#programming-exercise-csrf-prompt-by-pass
+[3] https://owasp.org/www-community/attacks/SQL_Injection
+[4] 

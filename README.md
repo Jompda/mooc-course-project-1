@@ -1,5 +1,5 @@
 # Project 1
-Based on mooc csrf task.
+[Instructions](https://cybersecuritybase.mooc.fi/module-3.1). Project based on MOOC CSRF task. 
 
 ## Accounts:
 ```

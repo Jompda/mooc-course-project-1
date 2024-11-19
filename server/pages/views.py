@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.db import transaction, connection
 from .models import Account
 
-# A03:2021-Injection: Vulnerable to SQL injection.
+# A03:2021-Injection: Vulnerable to SQL injection which propagates to functions using this function.
 # Fix by using django orm.
 @transaction.atomic
 def transfer(sender, receiver, amount):
