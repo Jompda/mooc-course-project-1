@@ -8,7 +8,7 @@ Using list OWASP Top 10 - 2021.
 FLAW 1:
 https://github.com/Jompda/mooc-course-project-1/blob/f5d629570876d9004e9693fece4c749c7cf73703/server/pages/templates/pages/confirm.html#L23
 
-Cross Site Request Forgery (CSRF) is a type of attack leveraging browser authentication. The idea is that if a browser holds authentication information to a service, like a cookie or HTTP login information, a malicious actor can then send requests to said service which the browser then automatically authenticates [1]. In the course project, the referenced form is pointing to a API end point which accepts a GET request which can easily be forged by having the following element in a website '<img src="DOMAIN/confirm/?INSERT_MALICIOUS_CONTENT" />', tricking the browser to sending the malicious request.
+Cross Site Request Forgery (CSRF) is a type of attack leveraging browser authentication. The idea is that if a browser holds authentication information to a service, like a cookie or HTTP login information, a malicious actor can then send requests to said service which the browser then automatically authenticates [1]. In the course project, the referenced form is pointing to a API end point which accepts a GET request which can easily be forged by having the following element in a website '<img src="DOMAIN/confirm/?sender=INSERT_SENDER_ID&receiver=INSERT_RECEIVER_ID&amount=INSERT_AMOUNT" />', tricking the browser to sending the malicious request.
 
 To filter out such requests, frameworks have begun providing single use tokens for the client. Should a request not have the correct token it should be deemed malicious [2].
 
@@ -24,14 +24,23 @@ This flaw can be avoided by sanitizing all client-submitted content. Also a comm
 FLAW 3:
 https://github.com/Jompda/mooc-course-project-1/blob/2fac63e8248bc8396576a2e9b172e2efcc9c59a9/server/pages/views.py#L31
 
-Broken access-control happens when a user is allowed to act outside their intended privileges [5]. In the referenced code, any authenticated user is able to confirm a transfer from any account to any account.
+Broken access-control happens when a user is allowed to act outside their intended privileges [5]. In the referenced code, any authenticated user is able to confirm a transfer from any account to any account. For example, a malicious request would be as follows: "DOMAIN/confirm/?sender=INSERT_SENDER_ID&receiver=INSERT_RECEIVER_ID&amount=INSERT_AMOUNT".
 
-Such flaw can be easily fixed by checking whether or not the user actually has control over the specified account.
+Such a flaw can be easily fixed by checking whether or not the user actually has control over the specified account.
 
 
-FLAW n:
-exact source link pinpointing flaw 1...
-description of flaw 1...
+FLAW 4: (Identification and Authentication Failures)
+https://github.com/Jompda/mooc-course-project-1/blob/3a602cfc02bc6c9acb366b48d25311eebee088de/server/pages/views.py#L61
+
+//: TODO (brute force login) [6].
+
+Hard limit on how many failed login attempts can occur within a certain amount of time, after which the IP address gets blocked for a while and the owner of the account in question gets notified.
+
+
+//: TODO
+FLAW 5:
+exact source link pinpointing flaw n...
+description of flaw n...
 how to fix it...
 
 
@@ -41,4 +50,5 @@ References:
 [3] https://owasp.org/www-community/attacks/SQL_Injection
 [4] https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.7-Testing_for_ORM_Injection.html
 [5] https://owasp.org/Top10/A01_2021-Broken_Access_Control/
-[6] 
+[6] https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/
+[7] 
