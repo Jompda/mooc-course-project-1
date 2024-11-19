@@ -1,24 +1,32 @@
 // TODO: Update links
 
 LINK: https://github.com/Jompda/mooc-course-project-1
+Using list OWASP Top 10 - 2021.
 // TODO: installation instructions if needed
 
 
 FLAW 1:
 https://github.com/Jompda/mooc-course-project-1/blob/f5d629570876d9004e9693fece4c749c7cf73703/server/pages/templates/pages/confirm.html#L23
 
-Cross Site Request Forgery (CSRF) is a type of attack leveraging browser authentication. The idea is that if a browser holds authentication information to a service, like a cookie or HTTP login information, a malicious actor can then send requests to said service which the browser then automatically authenticates. [1]
+Cross Site Request Forgery (CSRF) is a type of attack leveraging browser authentication. The idea is that if a browser holds authentication information to a service, like a cookie or HTTP login information, a malicious actor can then send requests to said service which the browser then automatically authenticates [1]. In the course project, the referenced form is pointing to a API end point which accepts a GET request which can easily be forged by having the following element in a website '<img src="DOMAIN/confirm/?INSERT_MALICIOUS_CONTENT" />', tricking the browser to sending the malicious request.
 
-To filter out such requests, frameworks have begun providing single use tokens for the client. Should a request not have the correct token it should be deemed malicious. [2]
+To filter out such requests, frameworks have begun providing single use tokens for the client. Should a request not have the correct token it should be deemed malicious [2].
 
 
 FLAW 2:
 https://github.com/Jompda/mooc-course-project-1/blob/f5d629570876d9004e9693fece4c749c7cf73703/server/pages/views.py#L8
 
-Flaw is SQL injection.
+SQL injection happens when unsanitized input from a client is passed to SQL queries, thus allowing SQL statements to be run arbitrarily [4]. The referenced code brings out this flaw by passing user-supplied content (HTTP query parameters) directly to a vulnerable function (transfer) which doesn't do any kind of sanitizing on the parameters and just inserts them to the SQL query.
 
-To fix uncomment thingies.
+This flaw can be avoided by sanitizing all client-submitted content. Also a common way to prevent SQL injection is to use libraries that provide Object-Relational Mapping (ORM) so the SQL queries are generated and sanitized properly from the get-go. Though, ORM injection [5] is also a thing.
 
+
+FLAW 3:
+https://github.com/Jompda/mooc-course-project-1/blob/2fac63e8248bc8396576a2e9b172e2efcc9c59a9/server/pages/views.py#L31
+
+Broken access-control
+
+how to fix it...
 
 
 FLAW n:
@@ -31,4 +39,5 @@ References:
 [1] https://owasp.org/www-community/attacks/csrf
 [2] https://cybersecuritybase.mooc.fi/module-2.3/1-security#programming-exercise-csrf-prompt-by-pass
 [3] https://owasp.org/www-community/attacks/SQL_Injection
-[4] 
+[4] https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.7-Testing_for_ORM_Injection.html
+[5] 

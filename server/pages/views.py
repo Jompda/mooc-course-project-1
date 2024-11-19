@@ -5,8 +5,38 @@ from django.contrib.auth.models import User
 from django.db import transaction, connection
 from .models import Account
 
-# A03:2021-Injection: Vulnerable to SQL injection which propagates to functions using this function.
-# Fix by using django orm.
+
+# A01:2021-Broken access control: Allows users to performs tasks not in their scope.
+# Fix by using session
+@login_required
+def transferView(request):
+	#request.session['to'] = request.GET.get('to')
+	#request.session['amount'] = int(request.GET.get('amount'))
+	return render(request, 'pages/confirm.html', {
+		'sender': request.user.account.id,
+		'receiver': User.objects.get(username=request.GET.get('to')).account.id,
+		'amount': request.GET.get('amount')
+	})
+
+@login_required
+def confirmView(request):
+	# User-supplied ids
+	# fix by getting ids from request.user and request.session['to']
+
+# A03:2021-Injection
+	sender_id = request.GET.get('sender')
+	receiver_id = request.GET.get('receiver')
+	amount = int(request.GET.get('amount'))
+	# Client-provided content is passed directly to a vulnerable function.
+	transfer(sender_id, receiver_id, amount)
+
+	Account.objects.get(id=sender_id).refresh_from_db()
+	Account.objects.get(id=receiver_id).refresh_from_db()
+	return redirect('/')
+# END OF A01:2021-Broken access control
+
+# Vulnerable to SQL injection
+# Injection can happen in any SQL statement.
 @transaction.atomic
 def transfer(sender, receiver, amount):
 	if sender == receiver:
@@ -26,32 +56,6 @@ def transfer(sender, receiver, amount):
 	cursor.execute("UPDATE pages_account SET balance = '%s' WHERE id = %s" % (acc1_balance - amount, sender))
 	cursor.execute("UPDATE pages_account SET balance = '%s' WHERE id = %s" % (acc2_balance + amount, receiver))
 # END OF A03:2021-Injection
-
-
-# A01:2021-Broken access control: Allows users to performs tasks not in their scope.
-# Fix by using session
-@login_required
-def transferView(request):
-	#request.session['to'] = request.GET.get('to')
-	#request.session['amount'] = int(request.GET.get('amount'))
-	return render(request, 'pages/confirm.html', {
-		'sender': request.user.account.id,
-		'receiver': User.objects.get(username=request.GET.get('to')).account.id,
-		'amount': request.GET.get('amount')
-	})
-
-@login_required
-def confirmView(request):
-	# User-supplied ids
-	# fix by getting ids from request.user and request.session['to']
-	sender_id = request.GET.get('sender')
-	receiver_id = request.GET.get('receiver')
-	amount = int(request.GET.get('amount'))
-	transfer(sender_id, receiver_id, amount)
-	Account.objects.get(id=sender_id).refresh_from_db()
-	Account.objects.get(id=receiver_id).refresh_from_db()
-	return redirect('/')
-# END OF A01:2021-Broken access control
 
 
 # A07:2021-Identification and Authentication Failures: Allows brute-force attacks
