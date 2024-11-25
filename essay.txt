@@ -2,7 +2,9 @@
 
 LINK: https://github.com/Jompda/mooc-course-project-1
 Using list OWASP Top 10 - 2021.
-// TODO: installation instructions if needed
+Installation instructions:
+1. Install Python.
+2. Install Django. Sometimes externally managed packages must be installed using a Linux package manager such as pacman.
 
 
 FLAW 1:
