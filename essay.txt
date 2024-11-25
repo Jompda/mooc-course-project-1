@@ -19,7 +19,7 @@ To filter out such requests, frameworks have begun providing single use tokens f
 FLAW 2:
 https://github.com/Jompda/mooc-course-project-1/blob/f5d629570876d9004e9693fece4c749c7cf73703/server/pages/views.py#L8
 
-SQL injection (A03:2021-Injection) happens when unsanitized input from a client is passed to SQL queries, thus allowing SQL statements to be run arbitrarily [3]. The referenced code brings out this flaw by passing user-supplied content (HTTP query parameters) directly to a vulnerable function (transfer) which doesn't do any kind of sanitizing on the parameters and just inserts them to the SQL query.
+A03:2021-Injection, in this case SQL injection, happens when unsanitized input from a client is passed to SQL queries, thus allowing SQL statements to be run arbitrarily [3]. The referenced code brings out this flaw by passing user-supplied content (HTTP query parameters) directly to a vulnerable function (transfer) which doesn't do any kind of sanitizing on the parameters and just inserts them to the SQL query.
 
 This flaw can be avoided by sanitizing all client-submitted content. Also a common way to prevent SQL injection is to use libraries that provide Object-Relational Mapping (ORM) so the SQL queries are generated and sanitized properly from the get-go. Though, ORM injection [4] is also a thing.
 
@@ -27,7 +27,7 @@ This flaw can be avoided by sanitizing all client-submitted content. Also a comm
 FLAW 3:
 https://github.com/Jompda/mooc-course-project-1/blob/2fac63e8248bc8396576a2e9b172e2efcc9c59a9/server/pages/views.py#L31
 
-Broken access-control (A01:2021-Broken Access Control) happens when a user is allowed to act outside their intended privileges [5]. In the referenced code, any authenticated user is able to confirm a transfer from any account to any account. For example, a malicious request would be as follows: "DOMAIN/confirm/?sender=INSERT_SENDER_ID&receiver=INSERT_RECEIVER_ID&amount=INSERT_AMOUNT".
+A01:2021-Broken Access Control happens when a user is allowed to act outside their intended privileges [5]. In the referenced code, any authenticated user is able to confirm a transfer from any account to any account. For example, a malicious request would be as follows: "DOMAIN/confirm/?sender=INSERT_SENDER_ID&receiver=INSERT_RECEIVER_ID&amount=INSERT_AMOUNT".
 
 Such a flaw can be easily fixed by checking whether or not the user actually has control over the specified account.
 
