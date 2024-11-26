@@ -30,6 +30,9 @@ patrick:asteroid
     - Jätä login bruteforcelle alttiiks.
     - hackpassword tiedosto tuotu, TODO siel
 
+- [X] A09:2021-Security Logging and Monitoring Failures
+  - "Without logging and monitoring, breaches cannot be detected"
+
 - [X] CSRF
   - "Cross-Site Request Forgery (CSRF) is an attack that forces an end user to execute unwanted actions on a web application in which they’re currently authenticated" https://owasp.org/www-community/attacks/csrf
     - Jätä CSRF token pois jostain formista.

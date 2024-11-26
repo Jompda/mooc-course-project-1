@@ -12,6 +12,10 @@ The decorator login_required doesn't provide rate-limiting per IP-address, nor a
 Fix by keeping track of login attempts by IP-address and setting a hard limit for a certain amount of time.
 Botnets with multiple IP-addresses are still a problem though. To protect an account,
 the limit can also be set for the account itself, causing it to get locked.
+
+A09:2021-Security Logging and Monitoring Failures: No persistent logging
+For instance, money transfers are not logged anywhere making it impossible to
+follow the trails and possibly reverse malicious actions.
 """
 @login_required
 def homePageView(request):
