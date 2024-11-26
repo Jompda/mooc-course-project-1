@@ -38,7 +38,7 @@ https://github.com/Jompda/mooc-course-project-1/blob/3a602cfc02bc6c9acb366b48d25
 
 A07:2021-Identification and Authentication Failures includes vulnerability to brute force attacks [6]. A brute force attack usually consists of testing common values at a rapid speed and it can be taken further by using mutations of said values [7]. Even exhaustive methods can be utilized with todays computing performance.
 
-Such a flaw can be quite easily fixed by setting a hard limit on how many failed login attempts can occur within a certain amount of time, after which the IP address gets blocked for a while, and optionally the owner of the account in question gets notified. Another method is to lock the victim account to prevent further login attempts [7].
+Such a flaw can be quite easily fixed by setting a hard limit on how many failed login attempts can occur within a certain amount of time, after which the IP address gets blocked for a while, and optionally the owner of the account in question gets notified. This method still leaves the account vulnerable to botnets executing the bruteforce attack because the requests come in from multiple IP-addresses. The solution is to lock the victim account to prevent further login attempts which is called "a lockout policy" [7].
 
 
 FLAW 5:
