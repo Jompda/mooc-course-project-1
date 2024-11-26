@@ -4,8 +4,8 @@
 LINK: https://github.com/Jompda/mooc-course-project-1
 Using list OWASP Top 10 - 2021.
 Installation instructions:
-1. Install Python.
-2. Install Django. Sometimes externally managed packages must be installed using a Linux package manager such as pacman.
+1. Install Python (https://www.python.org/).
+2. Install Django (https://docs.djangoproject.com/en/5.1/topics/install/). On Arch install package "python-django".
 
 
 FLAW 1:
