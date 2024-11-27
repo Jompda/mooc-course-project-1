@@ -61,6 +61,7 @@ def confirmView(request):
 	with transaction.atomic():
 		amount = request.session['amount']
 		to = User.objects.get(username=request.session['to'])
+		# Check that the sender actually has enough balance.
 		request.user.account.balance -= amount
 		to.account.balance += amount
 		request.user.account.save()
