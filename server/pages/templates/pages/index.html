@@ -17,8 +17,7 @@
 
 
         <form action='logout/' method="POST">
-			<!-- FIX CSRF-vulnerability -->
-            <!--{% csrf_token %}-->
+            {% csrf_token %}
             <input type="submit" value="Logout"/>
         </form>
 		
@@ -41,6 +40,6 @@
         </form>
 
     <!-- To illustrate CSRF culnerability. -->
-    <a href="/csrf/" target="_blank">EXAMPLE CSRF ATTACK: Send a request to transfer 10 to alice.</a>
+    <a href="/csrf/" target="_blank">EXAMPLE CSRF ATTACK: Send a request to transfer 10 bob to alice.</a>
     </body>
 </html>
