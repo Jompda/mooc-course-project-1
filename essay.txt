@@ -30,7 +30,7 @@ https://github.com/Jompda/mooc-course-project-1/blob/2fac63e8248bc8396576a2e9b17
 
 A01:2021-Broken Access Control occurs when a user is allowed to act outside their intended privileges [5]. In the referenced code the client provides the account IDs and amount for the transaction and the server just blindly trusts the information. In consequence, any authenticated user is able to confirm a transfer from any account to any account. For example, a malicious request could be as follows: "DOMAIN/confirm/?sender=INSERT_SENDER_ID&receiver=INSERT_RECEIVER_ID&amount=INSERT_AMOUNT".
 
-In real world, such a simple flaw should never make it to production but with a large amount of end-points, this could still happen. The flaw in question can be easily fixed by checking whether or not the user actually has privileges over the sender account on the server side.
+In real world, such a simple flaw should never make it to production. To a developer's defense, with a large amount of API end-points, this could still happen. The flaw in question can be easily fixed by checking whether or not the user actually has privileges over the sender account on the server side. In the project code the fix has been achieved by relying on the "@login_required" decorator which populates "request.user" who is always the authenticated sender, and thus no broken access control.
 
 
 FLAW 4:
@@ -44,9 +44,9 @@ Such a flaw can be quite easily fixed by setting a hard limit on how many failed
 FLAW 5:
 https://github.com/Jompda/mooc-course-project-1/blob/893901fc55dafeb0f4f7b22158c85e0a923483e3/server/pages/views.py#L16
 
-A09:2021-Security Logging and Monitoring Failures can be simplified to insufficient logging [8]. The course project only logs HTTP requests and they're just printed to STDOUT which doesn't even get stored anywhere. Thus, malicious money transfers or login attempts can go completely undetected.
+A09:2021-Security Logging and Monitoring Failures can be simplified to insufficient logging [8]. The course project only logs HTTP requests and they're just printed to STDOUT which doesn't even get stored anywhere. Due to this flawed design, tracing unintended behaviour of the system itself is near impossible and malicious activity such as money transfers or login attempts can go completely undetected.
 
-Fixing this issue takes a bit more effort. All events such as HTTP requests, logins, money transfers, and account lockouts should be logged to a persistent medium such as a database in a clearly readable format. In addition, the log should also be backed up in a separate physical location [8]. All this is to create a trail to track down activity, be it malicious or otherwise necessary.
+Fixing this issue takes a bit more effort. All events such as HTTP requests, logins, money transfers, and account lockouts should be logged to a persistent medium such as a database in a clearly readable format, excluding private information ofcourse. In addition, the log should also be backed up in a separate physical location [8]. All this is to create a trail to track down activity, be it malicious or otherwise necessary.
 
 
 References:
