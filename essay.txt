@@ -11,9 +11,9 @@ FLAW 1:
 https://github.com/Jompda/mooc-course-project-1/blob/d67868c03d737e7978a2022fd1c19abf345a803e/server/pages/templates/pages/confirm.html#L23
 Found in every form of the html templates.
 
-Cross Site Request Forgery (CSRF) is a type of attack leveraging browser authentication. The idea is that if a browser holds authentication information to a service, like a cookie or HTTP login information, a malicious actor can then send requests to said service which the browser then automatically authenticates [1]. In the course project, the referenced form is pointing to a API end point which accepts a GET request which can easily be forged by having the following element in a website '<img src="DOMAIN/confirm/?sender=INSERT_SENDER_ID&receiver=INSERT_RECEIVER_ID&amount=INSERT_AMOUNT" />', tricking the browser to sending the malicious request.
+Cross Site Request Forgery (CSRF) is a type of attack leveraging browser authentication. The idea is that if a browser holds authentication information to a service, like a cookie or HTTP login information, a malicious actor can then send requests to said service which the browser then automatically authenticates [1]. In the course project, the referenced form is pointing to a API end point which accepts a GET request which can easily be forged by having the following element in a website '<img src="DOMAIN/confirm/?sender=INSERT_SENDER_ID&receiver=INSERT_RECEIVER_ID&amount=INSERT_AMOUNT" />', tricking the browser to sending the malicious request. Note that forging POST requests isn't much harder and can even be sent with JavaScript [1].
 
-To filter out such requests, frameworks have begun providing tokens unique to user and form. Should a request not have the correct token it should be deemed as malicious and discarded [2]. Though this method still allows for a malicious website extract the CSRF token from the form page with a simple XmlHttpRequest effectively bypassing a token-based fix.
+To filter out such requests, frameworks have begun providing tokens unique to user and form. Should a request not have the correct token, it should be deemed as malicious and discarded [2]. Though this method still allows for a malicious website to extract the CSRF token from the form page with a simple XmlHttpRequest and include it in the final malicious request, effectively bypassing a token-based fix.
 
 
 FLAW 2:
