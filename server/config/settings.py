@@ -31,7 +31,8 @@ ALLOWED_HOSTS = []
 # sources:
 # - https://docs.djangoproject.com/en/5.1/howto/logging/
 # - https://docs.djangoproject.com/en/5.1/ref/logging/
-# Uncomment this and line 86 to enable logging.
+# Uncomment this and line 88 to enable logging.
+"""
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -64,6 +65,7 @@ LOGGING = {
         },
     },
 }
+"""
 
 # A07:2021-Identification and Authentication Failures
 # src: https://dev.to/arnopretorius/manage-failed-login-attempts-with-django-35pj

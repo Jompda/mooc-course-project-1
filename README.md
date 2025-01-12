@@ -4,8 +4,9 @@ Installation instructions:
 1. Install Python (https://www.python.org/).
 2. Install Django (https://docs.djangoproject.com/en/5.1/topics/install/). On Arch install package "python-django".
 3. Install dependencies by running "pip install django-axes dj_user_login_history".
-4. In the root directory of the project run "python3 manage.py migrate".
 5. Start server by running "python3 manage.py runserver".
+
+- If you enable something like login_history, make sure to run "python3 manage.py migrate".
 
 Accounts:
 bob:squarepants
