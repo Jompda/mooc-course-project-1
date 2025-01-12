@@ -27,6 +27,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# A07:2021-Identification and Authentication Failures
+# Also on lines 37, 47, 51 and 63
+AXES_FAILURE_LIMIT: 3
+AXES_COOLOFF_TIME: 2
+AXES_RESET_ON_SUCCESS = True
+
 
 # Application definition
 
@@ -37,7 +43,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	'server.pages'
+	'server.pages',
+    "axes" # A07:2021-Identification
+]
+
+AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesBackend', # A07:2021-Identification
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware' # A07:2021-Identification
 ]
 
 ROOT_URLCONF = 'server.config.urls'

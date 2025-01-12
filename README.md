@@ -3,20 +3,27 @@ Using list OWASP Top 10 - 2021.
 Installation instructions:
 1. Install Python (https://www.python.org/).
 2. Install Django (https://docs.djangoproject.com/en/5.1/topics/install/). On Arch install package "python-django".
-3. Start server by running "python3 manage.py runserver" in the root directory of the project.
+3. Install django-axes by running "pip install django-axes".
+4. Start server by running "python3 manage.py runserver" in the root directory of the project.
 
 Accounts:
 bob:squarepants
 alice:redqueen
 patrick:asteroid
 
+In case of locked account, run "python manage.py axes_reset"
+
+
 # TODO:
-- Lisää korjaukset 2,4,5
+- [ ] poista flaw 3 korjaus koodista
+  - mutkun eihän ole
+- [X] korjaus 4 koodiin
+- [ ] korjaus 5 koodiin
+- [ ] Lisää korjaus 2 koodiin
   - SQL korjaus pitää olla parameterisoiduilla kutsuilla
   "eiku oikea tapa on käyttää parameterisoituja kutsuja tai orm:a jotka hoitaa kaiken escapetuksen oikein."
-- poista flaw 3 korjaus koodista
-- CSRF: "ei ole CSRF. CSRF on tokenin tarkistuksen puute backendissa kutsuissa jotka muokkaavat serverin tilaa."
-- päivitä linkit
+- [X] CSRF: "ei ole CSRF. CSRF on tokenin tarkistuksen puute backendissa kutsuissa jotka muokkaavat serverin tilaa."
+- [ ] päivitä linkit
 
 
 FLAW 1:
