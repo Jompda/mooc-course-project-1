@@ -13,16 +13,11 @@ bob:squarepants
 alice:redqueen
 patrick:asteroid
 
-In case of locked account, run "python manage.py axes_reset"
-
-
-# TODO:
-- [ ] päivitä linkit
+In case of a locked account, run "python manage.py axes_reset"
 
 
 FLAW 1:
-https://github.com/Jompda/mooc-course-project-1/blob/011a0dfee01fbde3eecbdf568a5662b8efd5bc64/server/pages/templates/pages/confirm.html#L22
-Found in every form of the html templates.
+https://github.com/Jompda/mooc-course-project-1/blob/c94d0a7b9fd9dd280faa988fa3cb02b2547954af/server/pages/views.py#L42
 
 Cross Site Request Forgery (CSRF) is a type of attack leveraging browser authentication. The idea is that if a browser holds authentication information to a service, like a cookie or HTTP login information, a malicious actor can then send requests to said service which the browser then automatically authenticates [1]. In the course project, the referenced form is pointing to a API end point which accepts a GET request which can easily be forged by having the following element in a website '<img src="DOMAIN/confirm/?sender=INSERT_SENDER_ID&receiver=INSERT_RECEIVER_ID&amount=INSERT_AMOUNT" />', tricking the browser to sending the malicious request. Note that forging POST requests isn't much harder and can even be sent with JavaScript [1].
 
@@ -30,15 +25,15 @@ To filter out such requests, frameworks have begun providing tokens unique to us
 
 
 FLAW 2:
-https://github.com/Jompda/mooc-course-project-1/blob/011a0dfee01fbde3eecbdf568a5662b8efd5bc64/server/pages/views.py#L48
+https://github.com/Jompda/mooc-course-project-1/blob/c94d0a7b9fd9dd280faa988fa3cb02b2547954af/server/pages/views.py#L52
 
 A03:2021-Injection, in this case SQL injection, occurs when unsanitized input from a client is passed to SQL queries, thus allowing to escape the original SQL statement and run statements arbitrarily [3]. The referenced code has this flaw because it passes user-supplied content (HTTP query parameters) directly to a vulnerable function (transfer) which doesn't do any kind of sanitizing on the parameters and just inserts them to the SQL query.
 
-This flaw can be avoided by parameterization of queries. Besides this, a common way to prevent SQL injection is to use libraries that provide Object-Relational Mapping (ORM). Although, ORM injection [4] is also a thing. In other words, using external libraries to patch a vulnerability can sometimes increase the attack surface.
+This flaw can be avoided by utilizing parameterization of queries. Besides this, a common way to prevent SQL injection is to use libraries that provide Object-Relational Mapping (ORM). Although, ORM injection [4] is also a thing. In other words, using external libraries to patch a vulnerability can sometimes increase the attack surface.
 
 
 FLAW 3:
-https://github.com/Jompda/mooc-course-project-1/blob/011a0dfee01fbde3eecbdf568a5662b8efd5bc64/server/pages/views.py#L26
+https://github.com/Jompda/mooc-course-project-1/blob/c94d0a7b9fd9dd280faa988fa3cb02b2547954af/server/pages/views.py#L45
 
 A01:2021-Broken Access Control occurs when a user is allowed to act outside their intended privileges [5]. In the referenced code the client provides the account IDs and amount for the transaction and the server just blindly trusts the information. In consequence, any authenticated user is able to confirm a transfer from any account to any account. For example, a malicious request could be as follows: "DOMAIN/confirm/?sender=INSERT_SENDER_ID&receiver=INSERT_RECEIVER_ID&amount=INSERT_AMOUNT".
 
@@ -46,7 +41,7 @@ In real world, such a simple flaw should never make it to production. To a devel
 
 
 FLAW 4:
-https://github.com/Jompda/mooc-course-project-1/blob/011a0dfee01fbde3eecbdf568a5662b8efd5bc64/server/pages/views.py#L10
+https://github.com/Jompda/mooc-course-project-1/blob/c94d0a7b9fd9dd280faa988fa3cb02b2547954af/server/config/settings.py#L70
 
 A07:2021-Identification and Authentication Failures includes vulnerability to brute force attacks [6]. A brute force attack usually consists of testing common values at a rapid speed and it can be taken further by using mutations of said values [7]. Even exhaustive methods can be utilized with todays computing performance.
 
@@ -54,7 +49,8 @@ Such a flaw can be quite easily fixed by setting a hard limit on how many failed
 
 
 FLAW 5:
-https://github.com/Jompda/mooc-course-project-1/blob/011a0dfee01fbde3eecbdf568a5662b8efd5bc64/server/pages/views.py#L16
+https://github.com/Jompda/mooc-course-project-1/blob/c94d0a7b9fd9dd280faa988fa3cb02b2547954af/server/config/settings.py#L30
+https://github.com/Jompda/mooc-course-project-1/blob/c94d0a7b9fd9dd280faa988fa3cb02b2547954af/server/pages/views.py#L8
 
 A09:2021-Security Logging and Monitoring Failures can be simplified to insufficient logging [8]. The course project only logs HTTP requests and they're just printed to STDOUT which doesn't even get stored anywhere. Due to this flawed design, tracing unintended behaviour of the system itself is near impossible and malicious activity such as money transfers or login attempts can go completely undetected.
 
