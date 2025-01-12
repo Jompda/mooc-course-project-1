@@ -56,7 +56,7 @@ def confirmView(request):
 	Account.objects.get(id=sender_id).refresh_from_db()
 	Account.objects.get(id=receiver_id).refresh_from_db()
 
-	""" Fix flaw 2 by bypassing vulnerable function and retrieving transaction details from server state.
+	""" Fix flaw 3 by bypassing vulnerable function and retrieving transaction details from server state.
 	with transaction.atomic():
 		amount = request.session['amount']
 		to = User.objects.get(username=request.session['to'])
