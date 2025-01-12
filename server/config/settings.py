@@ -28,7 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # A07:2021-Identification and Authentication Failures
-# Also on lines 37, 47, 51 and 63
+# src: https://dev.to/arnopretorius/manage-failed-login-attempts-with-django-35pj
+# Also on lines 38, 48, 52 and 64
 AXES_FAILURE_LIMIT: 3
 AXES_COOLOFF_TIME: 2
 AXES_RESET_ON_SUCCESS = True
