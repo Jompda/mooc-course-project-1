@@ -11,27 +11,16 @@ from .models import Account
 #logger = logging.getLogger(__name__)
 
 
-"""
-A07:2021-Identification and Authentication Failures: Allows brute-force attacks
-The decorator login_required doesn't provide rate-limiting per IP-address, nor account protection via lockdown.
-Fix by keeping track of login attempts by IP-address and setting a hard limit for a certain amount of time.
-Botnets with multiple IP-addresses are still a problem though. To protect an account,
-the limit can also be set for the account itself, causing it to get locked.
-
-A09:2021-Security Logging and Monitoring Failures: No persistent logging
-For instance, money transfers are not logged anywhere making it impossible to
-follow the trails and possibly reverse malicious actions.
-"""
 @login_required
 def homePageView(request):
 	accounts = Account.objects.exclude(user_id=request.user.id)
 	return render(request, 'pages/index.html', {'accounts': accounts})
 
 
-# A01:2021-Broken access control: Allows users to performs tasks not in their scope.
 @login_required
 def transferView(request):
 	"""
+	A01:2021-Broken access control
 	Program provides the client a context which contains account ids which the client then sends back to complete the transfer.
 	During this time, the client can manipulate the ids and amount to their will, giving any authenticated user ability to
 	transfer any amount from any account to any account.
@@ -50,10 +39,12 @@ def transferView(request):
     """
 	return render(request, 'pages/confirm.html', context)
 
-# CSRF fix
-# csrf_protect
+# CSRF fix below
+# @csrf_protect
 # A03:2021-Injection
 @login_required
+# A01:2021-Broken access control: Allows users to performs tasks not in their scope.
+# Propagates from above
 def confirmView(request):
 	sender_id = request.GET.get('sender')
 	receiver_id = request.GET.get('receiver')
@@ -64,7 +55,7 @@ def confirmView(request):
 	Account.objects.get(id=sender_id).refresh_from_db()
 	Account.objects.get(id=receiver_id).refresh_from_db()
 
-	""" Fix by bypassing vulnerable function and retrieving transaction details from server state.
+	""" Fix flaw 2 by bypassing vulnerable function and retrieving transaction details from server state.
 	with transaction.atomic():
 		amount = request.session['amount']
 		to = User.objects.get(username=request.session['to'])
@@ -76,7 +67,6 @@ def confirmView(request):
     """
 	#logger.info("TRANSFERRED %d from %s to %s", amount, sender_id, receiver_id)
 	return redirect('/')
-# END OF A01:2021-Broken access control
 
 # Vulnerable to SQL injection
 # Injection can happen in any SQL statement due to lack of sanitation.
