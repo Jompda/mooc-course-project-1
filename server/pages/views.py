@@ -41,7 +41,6 @@ def transferView(request):
 
 # CSRF fix below
 # @csrf_protect
-# A03:2021-Injection
 @login_required
 # A01:2021-Broken access control: Allows users to performs tasks not in their scope.
 # Propagates from above
@@ -50,6 +49,8 @@ def confirmView(request):
 	receiver_id = request.GET.get('receiver')
 	amount = int(request.GET.get('amount'))
 
+	# A03:2021-Injection
+	# FIX ON LINE 60 INSIDE COMMENT
 	# Client-provided content is passed directly to a vulnerable function.
 	transfer(sender_id, receiver_id, amount)
 	Account.objects.get(id=sender_id).refresh_from_db()

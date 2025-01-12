@@ -17,9 +17,6 @@ In case of locked account, run "python manage.py axes_reset"
 
 
 # TODO:
-- [ ] Lisää korjaus 2 koodiin
-  - SQL korjaus pitää olla parameterisoiduilla kutsuilla
-  "eiku oikea tapa on käyttää parameterisoituja kutsuja tai orm:a jotka hoitaa kaiken escapetuksen oikein."
 - [ ] päivitä linkit
 
 
@@ -37,7 +34,7 @@ https://github.com/Jompda/mooc-course-project-1/blob/011a0dfee01fbde3eecbdf568a5
 
 A03:2021-Injection, in this case SQL injection, occurs when unsanitized input from a client is passed to SQL queries, thus allowing to escape the original SQL statement and run statements arbitrarily [3]. The referenced code has this flaw because it passes user-supplied content (HTTP query parameters) directly to a vulnerable function (transfer) which doesn't do any kind of sanitizing on the parameters and just inserts them to the SQL query.
 
-This flaw can be avoided by sanitizing all client-submitted content. For instance, only allowing letters, numbers, and whitespace to prevent escaping the SQL statement. Besides this, a common way to prevent SQL injection is to use libraries that provide Object-Relational Mapping (ORM) so the SQL queries are generated and sanitized properly from the get-go. Although, ORM injection [4] is also a thing. In other words, using external libraries to patch a vulnerability can sometimes increase the attack surface.
+This flaw can be avoided by parameterization of queries. Besides this, a common way to prevent SQL injection is to use libraries that provide Object-Relational Mapping (ORM). Although, ORM injection [4] is also a thing. In other words, using external libraries to patch a vulnerability can sometimes increase the attack surface.
 
 
 FLAW 3:
