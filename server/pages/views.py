@@ -5,6 +5,10 @@ from django.contrib.auth.models import User
 from django.db import transaction, connection
 from django.views.decorators.csrf import csrf_protect
 from .models import Account
+# A09:2021-Security Logging and Monitoring Failures
+# Uncomment lines below and lines containing logger to enable logging.
+import logging
+logger = logging.getLogger(__name__)
 
 
 """
@@ -70,6 +74,7 @@ def confirmView(request):
 		request.user.account.save()
 		to.account.save()
     """
+	logger.info("TRANSFERRED %d from %s to %s", amount, sender_id, receiver_id)
 	return redirect('/')
 # END OF A01:2021-Broken access control
 

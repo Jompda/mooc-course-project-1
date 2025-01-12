@@ -27,13 +27,50 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# A09:2021-Security Logging and Monitoring Failures
+# sources:
+# - https://docs.djangoproject.com/en/5.1/howto/logging/
+# - https://docs.djangoproject.com/en/5.1/ref/logging/
+# Uncomment this and line 86 to enable logging.
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "general.log",
+        },
+    },
+    "formatters": {
+        "django.server": {
+            "()": "django.utils.log.ServerFormatter",
+            "format": "[{server_time}] {message}",
+            "style": "{",
+        }
+    },
+    "loggers": {
+        "": {
+            "level": "INFO",
+            "handlers": ["file"],
+        },
+        "django": {
+            "handlers": ["file"],
+            "level": "INFO",
+        },
+        "django.server": {
+            "handlers": ["file"],
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
+}
+
 # A07:2021-Identification and Authentication Failures
 # src: https://dev.to/arnopretorius/manage-failed-login-attempts-with-django-35pj
-# Also on lines 38, 48, 52 and 64
-AXES_FAILURE_LIMIT: 3
-AXES_COOLOFF_TIME: 2
-AXES_RESET_ON_SUCCESS = True
-
+# Uncomment  all lines containing "axes" to enable flaw 4 fix.
+#AXES_FAILURE_LIMIT: 3
+#AXES_COOLOFF_TIME: 2
+#AXES_RESET_ON_SUCCESS = True
 
 # Application definition
 
@@ -45,11 +82,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 	'server.pages',
-    "axes" # A07:2021-Identification
+    #'axes', # A07:2021-Identification
+    #'login_history' # A09:2021-Security Logging and Monitoring Failures
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'axes.backends.AxesBackend', # A07:2021-Identification
+    #'axes.backends.AxesBackend', # A07:2021-Identification
     'django.contrib.auth.backends.ModelBackend',
 ]
 
@@ -61,7 +99,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'axes.middleware.AxesMiddleware' # A07:2021-Identification
+    #'axes.middleware.AxesMiddleware' # A07:2021-Identification
 ]
 
 ROOT_URLCONF = 'server.config.urls'

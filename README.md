@@ -3,8 +3,9 @@ Using list OWASP Top 10 - 2021.
 Installation instructions:
 1. Install Python (https://www.python.org/).
 2. Install Django (https://docs.djangoproject.com/en/5.1/topics/install/). On Arch install package "python-django".
-3. Install django-axes by running "pip install django-axes".
-4. Start server by running "python3 manage.py runserver" in the root directory of the project.
+3. Install dependencies by running "pip install django-axes dj_user_login_history".
+4. In the root directory of the project run "python3 manage.py migrate".
+5. Start server by running "python3 manage.py runserver".
 
 Accounts:
 bob:squarepants
@@ -18,7 +19,7 @@ In case of locked account, run "python manage.py axes_reset"
 - [ ] poista flaw 3 korjaus koodista
   - mutkun eihän ole
 - [X] korjaus 4 koodiin
-- [ ] korjaus 5 koodiin
+- [X] korjaus 5 koodiin
 - [ ] Lisää korjaus 2 koodiin
   - SQL korjaus pitää olla parameterisoiduilla kutsuilla
   "eiku oikea tapa on käyttää parameterisoituja kutsuja tai orm:a jotka hoitaa kaiken escapetuksen oikein."
@@ -64,7 +65,7 @@ https://github.com/Jompda/mooc-course-project-1/blob/011a0dfee01fbde3eecbdf568a5
 
 A09:2021-Security Logging and Monitoring Failures can be simplified to insufficient logging [8]. The course project only logs HTTP requests and they're just printed to STDOUT which doesn't even get stored anywhere. Due to this flawed design, tracing unintended behaviour of the system itself is near impossible and malicious activity such as money transfers or login attempts can go completely undetected.
 
-Fixing this issue takes a bit more effort. All events such as HTTP requests, logins, money transfers, and account lockouts should be logged to a persistent medium such as a database in a clearly readable format, excluding private information ofcourse. In addition, the log should also be backed up in a separate physical location [8]. All this is to create a trail to track down activity, be it malicious or otherwise necessary.
+Fixing this issue takes a bit more effort. All events such as HTTP requests, logins, money transfers, and account lockouts should be logged to a persistent medium such as a database or dedicated files in a clearly readable format, excluding private information ofcourse. In addition, the log should also be backed up in a separate physical location [8]. All this is to create a trail to track down activity, be it malicious or otherwise necessary.
 
 
 References:
