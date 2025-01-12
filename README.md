@@ -17,8 +17,6 @@ In case of locked account, run "python manage.py axes_reset"
 
 
 # TODO:
-- [ ] poista flaw 3 korjaus koodista
-  - mutkun eihän ole
 - [ ] Lisää korjaus 2 koodiin
   - SQL korjaus pitää olla parameterisoiduilla kutsuilla
   "eiku oikea tapa on käyttää parameterisoituja kutsuja tai orm:a jotka hoitaa kaiken escapetuksen oikein."
