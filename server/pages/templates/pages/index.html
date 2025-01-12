@@ -24,8 +24,7 @@
         <h2>Transfer money</h2>
 
         <form action='transfer/' method="GET">
-            <!-- FIX CSRF-vulnerability -->
-            <!--{% csrf_token %}-->
+            {% csrf_token %}
             <span>To:</span><br/>
             <select name="to">
 			{% for account in accounts %}
@@ -40,6 +39,6 @@
         </form>
 
     <!-- To illustrate CSRF culnerability. -->
-    <a href="/csrf/" target="_blank">EXAMPLE CSRF ATTACK: Send a request to transfer 10 bob to alice.</a>
+    <a href="/csrf/" target="_blank">EXAMPLE CSRF ATTACK: Send a request to transfer 10 from bob to alice.</a>
     </body>
 </html>

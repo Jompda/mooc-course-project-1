@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.db import transaction, connection
+from django.views.decorators.csrf import csrf_protect
 from .models import Account
 
 
@@ -45,6 +46,8 @@ def transferView(request):
     """
 	return render(request, 'pages/confirm.html', context)
 
+# CSRF fix
+# csrf_protect
 # A03:2021-Injection
 @login_required
 def confirmView(request):
