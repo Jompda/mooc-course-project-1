@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.db import transaction, connection
-from django.views.decorators.csrf import csrf_protect
 from .models import Account
 # A09:2021-Security Logging and Monitoring Failures
 # Uncomment lines below and lines containing logger to enable logging.
@@ -39,8 +38,6 @@ def transferView(request):
     """
 	return render(request, 'pages/confirm.html', context)
 
-# CSRF fix below
-# @csrf_protect
 @login_required
 # A01:2021-Broken access control: Allows users to performs tasks not in their scope.
 # Propagates from above
